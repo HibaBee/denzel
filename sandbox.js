@@ -6,7 +6,7 @@ async function sandbox (actor) {
   try {
     console.log(`📽️  fetching filmography of ${actor}...`);
     const movies = await imdb(actor);
-    const awesome = movies.filter(movie => movie.metascore >= 77);
+    const awesome = movies.filter(movie => movie.metascore >= 70);
 
     console.log(`🍿 ${movies.length} movies found.`);
     console.log(JSON.stringify(movies, null, 2));
