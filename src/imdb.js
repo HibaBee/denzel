@@ -4,50 +4,6 @@ const pLimit = require('p-limit');
 const pSettle = require('p-settle');
 const {IMDB_NAME_URL, IMDB_URL, P_LIMIT} = require('./constants');
 
-const Express = require("express");
-const BodyParser = require("body-parser");
-const MongoClient = require("mongodb").MongoClient;
-const ObjectId = require("mongodb").ObjectID;
-
-const CONNECTION_URL = "mongodb+srv://Lala:Hiba@cluster0-nkn7j.mongodb.net/test?retryWrites=true";
-const DATABASE_NAME = "movies";
-
-var app = Express();
-
-app.use(BodyParser.json());
-app.use(BodyParser.urlencoded({ extended: true }));
-
-app.listen(9292, () => {
-    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        database = client.db(DATABASE_NAME);
-        collection = database.collection(DATABASE_NAME);
-        console.log("Connected to `" + DATABASE_NAME + "`!");
-    });
-});
-
-app.post("/movies", (request, response) => {
-    collection.insert(request.body, (error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result.result);
-    });
-});
-
-
-app.get("/movies", (request, response) => {
-    collection.find({}).toArray((error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result);
-    });
-});
-
-
 /**
  * Get filmography for a given actor
  * @param  {String}  actor - imdb id
