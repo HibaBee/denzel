@@ -1,4 +1,12 @@
 //connections compulsory to start a mongodb connection
+
+//get all the libraries needed
+const graphqlHTTP = require('express-graphql');
+const {GraphQLSchema} = require('graphql');
+const {queryType} = require('./query.js');
+// Define the Schema
+const schema = new GraphQLSchema({ query: queryType });
+
 const imdb = require('./src/imdb');
 const Express = require("express");
 const BodyParser = require("body-parser");
@@ -9,9 +17,15 @@ const DATABASE_NAME = "movies";
 var app = Express();
 var collection, database;
 
-
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
+
+//Setup the nodejs GraphQL server
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+}));
+
 
 app.listen(9292, () => {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
@@ -84,3 +98,5 @@ app.get("/movies", async(request, response) => {
 });
 
 //mongoimport --uri "mongodb+srv://Lala:Hiba@cluster0-nkn7j.mongodb.net/test?retryWrites=true" --collection Lala --drop --file C:\Users\Adm\Downloads\ESILV\ESILV-4A\S8\Web Architecture\denzel\list_movies.json
+app.listen(5000);
+console.log(`GraphQL Server Running at localhost:${5000}`);
