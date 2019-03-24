@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const {
     GraphQLObjectType,
     GraphQLID,
@@ -17,11 +19,7 @@ movieType = new GraphQLObjectType({
 		synopsis: { type: GraphQLString },
         title: { type: GraphQLString },
 		metascore: { type: GraphQLInt },
-		link: { type: GraphQLString },
-  // metascore: Int
-  // synopsis: String
-  // title: String
-  // year: Int
+		link: { type: GraphQLString }
 
     }
 });
